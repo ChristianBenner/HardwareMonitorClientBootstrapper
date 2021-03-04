@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define HardwareMonitorBootstrapper_TargetDir=$(var.HardwareMonitorBootstrapper.TargetDir)?>
+  <Product Id="2645677B-CB40-4A2E-B0D6-B5D0672F88B0" Name="Hardware Monitor" Language="1033" Version="0.6.11.0" Manufacturer="Benner" UpgradeCode="60f22caf-d0ee-4f77-b6ce-9bfc73b766b5">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <!-- Use icon in program list -->
+    <Icon Id="icon.ico" SourceFile="$(var.ProjectDir)\icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+    <!-- Display Wix minimal user interface -->
+    <WixVariable Id="WixUIBannerBmp" Value="Images\installer_top-banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="Images\installer_background.bmp" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\license.rtf" />
+    <UIRef Id="WixUI_Minimal" />
+    
+    <MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A newer version of the Hardware Monitor is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+    <Feature Id="ProductFeature" Title="HardwareMonitorInstaller" Level="1">
+      <!-- Places product components in install folder -->
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="jreHeatGenerated" />
+      
+      <!-- Places shortcuts in there places -->
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="ApplicationShortcutDesktop" />
+      <ComponentRef Id="RegistryEntries" />
+		</Feature>
+
+    <!-- Reference to the require .NET framework for the application -->
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED"/>
+
+    <!-- Check that the required .NET framework is installed -->
+    <Condition Message="Hardware Monitor instllation requires .NET Framework 4.6.1 or later. Please download and install .NET Framework 4.6.1 from Microsoft and retry installation">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
+    </Condition>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Define where the application is going to be installed (in program files) -->
+			<Directory Id="ProgramFiles64Folder">
+        <Directory Id="COMPANY_FOLDER" Name="Benner">
+          <Directory Id="INSTALLFOLDER" Name="HardwareMonitor">
+            <Directory Id="JRE_INSTALL_FOLDER" Name="jre" />
+          </Directory>
+        </Directory>
+      </Directory>
+      <!-- Add shortcut to program menu (start menu) -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Hardware Monitor" />
+      </Directory>
+      <!-- Add shortcut to desktop -->
+      <Directory Id="DesktopFolder" Name="Hardware Monitor" />
+		</Directory>
+	</Fragment>
+  
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <!-- Add to system start-up -->
+      <Component Id="RegistryEntries" Guid="3A7CF9F8-91F3-46F7-AD53-9086089D39DC">
+        <RegistryValue Id="BHWM.rst"
+                       Root="HKMU"
+                       Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+                       Action="write"
+                       Type="string"
+                       Name="Hardware Monitor"
+                       Value="[INSTALLFOLDER]HardwareMonitorBootstrapper.exe"/>
+      </Component>
+    </DirectoryRef>
+    
+    <!-- Create shortcut in the application programs folder -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="D603BACF-0752-48CC-B63D-01CE0895CE64">
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="Hardware Monitor" Description="Hardware Monitor Editor" Target="[INSTALLFOLDER]HardwareMonitorBootstrapper.exe" WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\HardwareMonitor" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    
+    <!-- Create shortcut in the desktop folder -->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="BF81AD95-D907-4BAF-887A-354FC6EEDFAE">
+        <Shortcut Id="ApplicationDesktopShortcut" Name="Hardware Monitor" Description="Hardware Monitor Editor" Target="[INSTALLFOLDER]HardwareMonitorBootstrapper.exe" WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\HardwareMonitor" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  
+  <Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+			<Component Id="HardwareMonitorBootstrapper.exe" Guid="2468fbb0-0fec-46bc-b6db-411722907a69">
+			  <File Id="HardwareMonitorBootstrapper.exe" Name="HardwareMonitorBootstrapper.exe" Source="$(var.HardwareMonitorBootstrapper_TargetDir)HardwareMonitorBootstrapper.exe" />
+			</Component>
+			<Component Id="NativeInterface.dll" Guid="2cd749b2-7a0b-4ba0-803e-27b8f3611d51">
+			  <File Id="NativeInterface.dll" Name="NativeInterface.dll" Source="$(var.HardwareMonitorBootstrapper_TargetDir)NativeInterface.dll" />
+			</Component>
+			<Component Id="OpenHardwareMonitorLib.dll" Guid="a3639826-9073-4103-9272-f0abc398ae11">
+			  <File Id="OpenHardwareMonitorLib.dll" Name="OpenHardwareMonitorLib.dll" Source="$(var.HardwareMonitorBootstrapper_TargetDir)OpenHardwareMonitorLib.dll" />
+			</Component>
+			<Component Id="HardwareMonitorBootstrapper.exe.config" Guid="5c742ccc-00fc-4996-838c-50d9b47fbd5e">
+			  <File Id="HardwareMonitorBootstrapper.exe.config" Name="HardwareMonitorBootstrapper.exe.config" Source="$(var.HardwareMonitorBootstrapper_TargetDir)HardwareMonitorBootstrapper.exe.config" />
+			</Component>
+      <Component Id="HardwareMonitorEditor.jar" Guid="62C0B525-08D7-4919-8328-BB9A8AE211A2">
+        <File Id="HardwareMonitorEditor.jar" Name="HardwareMonitorEditor.jar" Source="$(var.HardwareMonitorBootstrapper_TargetDir)HardwareMonitorEditor.jar" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

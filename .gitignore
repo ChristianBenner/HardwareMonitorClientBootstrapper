@@ -1,0 +1,10 @@
+/.vs
+/deploy
+/HardwareMonitorClientBootstrapper/bin
+/HardwareMonitorClientBootstrapper/obj
+/HardwareMonitorInstaller/bin
+/HardwareMonitorInstaller/obj
+*.jar
+*.csproj
+*.user
+*.sln
