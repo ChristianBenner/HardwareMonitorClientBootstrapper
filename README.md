@@ -1,2 +1,2 @@
 # HardwareMonitorClientBootstrapper
- 
+The HardwareMonitorClientBoostrapper is designed to launch and communicate hardware sensor data to the [HardwareMonitorClient (https://github.com/ChristianBenner/HardwareMonitorClient). It uses the [NativeInterface](https://github.com/ChristianBenner/NativeInterface) library to launch and communicate with the HardwareMonitorClient using the JNI (Java Native Interface). To gather hardware sensor data the library [OpenHardwareMonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) is used. This project also includes an installer created using WiX.
