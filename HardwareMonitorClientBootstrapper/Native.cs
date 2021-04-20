@@ -3,20 +3,19 @@ using OpenHardwareMonitor.Hardware;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static HardwareMonitorClientBootstrapper.NativeInterface;
 
 namespace HardwareMonitorClientBootstrapper
 {
     class NativeInterface
     {
-        public const string APPLICATION_CORE_CLASS_PATH = "com/bennero/core/ApplicationCore";
+        public const string APPLICATION_CORE_CLASS_PATH = "com/bennero/client/core/ApplicationCore";
         public const string APPLICATION_CORE_LAUNCH_APPLICATION_FUNCTION = "launchApplication";
 
-        public const string NATIVE_CLASS_PATH = "com/bennero/bootstrapper/Native";
+        public const string NATIVE_CLASS_PATH = "com/bennero/client/bootstrapper/Native";
         public const string NATIVE_UPDATE_SENSORS_FUNCTION = "updateSensors";
         public const string NATIVE_ADD_SENSORS_FUNCTION = "addSensors";
 
-        public const string SENSOR_REQUEST_CLASS_PATH = "com/bennero/bootstrapper/SensorRequest";
+        public const string SENSOR_REQUEST_CLASS_PATH = "com/bennero/client/bootstrapper/SensorRequest";
         public const string SENSOR_REQUEST_SET_VALUE_FUNCTION = "setValue";
 
 

@@ -1,6 +1,5 @@
 ﻿using NativeInterface;
 using System;
-using System.Collections.Generic;
 
 namespace HardwareMonitorClientBootstrapper
 {
