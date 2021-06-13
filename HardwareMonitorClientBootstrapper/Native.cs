@@ -80,7 +80,7 @@ namespace HardwareMonitorClientBootstrapper
 
         private Dictionary<IntPtr, ISensor> sensorObjects;
 
-        public class NativeCallbackDelegates
+        public static class NativeCallbackDelegates
         {
             [UnmanagedFunctionPointer(CallingConvention.StdCall)]
             public delegate void UpdateNative(IntPtr env, IntPtr clazz);
@@ -89,13 +89,10 @@ namespace HardwareMonitorClientBootstrapper
             public delegate void NativeAddSensors(IntPtr env, IntPtr clazz);
         }
 
-        public IntPtr hook;
-
-        private Delegate addSensorsDelegate;
-        private Delegate updateNativeDelegate;
-
-        private NativeJavaMethod nativeAddSensors;
-        private NativeJavaMethod nativeUpdateSensors;
+        private static Delegate addSensorsDelegate;
+        private static Delegate updateNativeDelegate;
+        
+        private NativeJavaMethod[] methods;
 
         public NativeInterface(Jvm jvm)
         {
@@ -118,13 +115,13 @@ namespace HardwareMonitorClientBootstrapper
             addSensorsDelegate = (NativeCallbackDelegates.NativeAddSensors)NativeAddSensors;
             updateNativeDelegate = (NativeCallbackDelegates.UpdateNative)UpdateNative;
 
-            nativeAddSensors = NativeJavaMethod.DescribeNativeVoidMethod(NATIVE_ADD_SENSORS_FUNCTION, addSensorsDelegate);
-            nativeUpdateSensors = NativeJavaMethod.DescribeNativeVoidMethod(NATIVE_UPDATE_SENSORS_FUNCTION, updateNativeDelegate);
+            GC.KeepAlive(addSensorsDelegate);
+            GC.KeepAlive(updateNativeDelegate);
 
-            NativeJavaMethod[] methods = new NativeJavaMethod[]
+            methods = new NativeJavaMethod[]
             {
-                nativeAddSensors,
-                nativeUpdateSensors
+                NativeJavaMethod.DescribeNativeVoidMethod(NATIVE_ADD_SENSORS_FUNCTION, addSensorsDelegate),
+                NativeJavaMethod.DescribeNativeVoidMethod(NATIVE_UPDATE_SENSORS_FUNCTION, updateNativeDelegate)
             };
 
             jvm.RegisterNatives(NATIVE_CLASS_PATH, methods);
