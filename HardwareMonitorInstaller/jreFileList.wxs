@@ -153,6 +153,9 @@
                 <Component Id="cmp038CD29879538464A699FC94FF864CA2" Guid="*">
                     <File Id="filAC7DC0FBE16D558EC3A4710D5E48F1DD" KeyPath="yes" Source="$(var.JREHarvestPath)\bin\gstreamer-lite.dll" />
                 </Component>
+                <Component Id="cmp1F20107E6B8810AC44BC0B2A808F991E" Guid="*">
+                    <File Id="fil08B0B17767C19B6279D4B2F965C9B596" KeyPath="yes" Source="$(var.JREHarvestPath)\bin\harfbuzz.dll" />
+                </Component>
                 <Component Id="cmp216027DF849D619F12D372936B34E74E" Guid="*">
                     <File Id="filAAC0AE52C19110B652219DA747CAA178" KeyPath="yes" Source="$(var.JREHarvestPath)\bin\java.dll" />
                 </Component>
@@ -227,6 +230,9 @@
                 </Component>
                 <Component Id="cmpDA53B8B9D4547047893FF338BE72F812" Guid="*">
                     <File Id="filA1135F7A81049686E5493794678902E3" KeyPath="yes" Source="$(var.JREHarvestPath)\bin\vcruntime140.dll" />
+                </Component>
+                <Component Id="cmpB7CE29CEEE759B90B2D9DCFBD5CF246E" Guid="*">
+                    <File Id="filBB7056A2775E0425E92FB35AD81B142D" KeyPath="yes" Source="$(var.JREHarvestPath)\bin\vcruntime140_1.dll" />
                 </Component>
                 <Component Id="cmp65F9B7CD6539D25E0A796134A4D518D0" Guid="*">
                     <File Id="fil956FF3B9CC802EFD8653E6444ECF2F11" KeyPath="yes" Source="$(var.JREHarvestPath)\bin\verify.dll" />
@@ -628,6 +634,7 @@
             <ComponentRef Id="cmp5250B9AD7740A3D28E873669CE0D737E" />
             <ComponentRef Id="cmp13EE25777478EDE41E641C17157201B4" />
             <ComponentRef Id="cmp038CD29879538464A699FC94FF864CA2" />
+            <ComponentRef Id="cmp1F20107E6B8810AC44BC0B2A808F991E" />
             <ComponentRef Id="cmp216027DF849D619F12D372936B34E74E" />
             <ComponentRef Id="cmpEB693557197CEDA72A693305527170FE" />
             <ComponentRef Id="cmp14C099F96EC5C693CCD9FC0982948478" />
@@ -653,6 +660,7 @@
             <ComponentRef Id="cmp938A786972807D75012DDB212841833F" />
             <ComponentRef Id="cmp2C01D59B12C79DC13F013E620FD28DA4" />
             <ComponentRef Id="cmpDA53B8B9D4547047893FF338BE72F812" />
+            <ComponentRef Id="cmpB7CE29CEEE759B90B2D9DCFBD5CF246E" />
             <ComponentRef Id="cmp65F9B7CD6539D25E0A796134A4D518D0" />
             <ComponentRef Id="cmpBC0EBA6263340E8C7C243A5BA9E57C03" />
             <ComponentRef Id="cmp76DEAC1064F5DD389C33577F65885ACC" />

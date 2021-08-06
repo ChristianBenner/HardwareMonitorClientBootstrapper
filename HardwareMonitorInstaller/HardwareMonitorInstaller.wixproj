@@ -35,7 +35,6 @@
     <Compile Include="jreFileList.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HardwareMonitorClient.jar" />
     <Content Include="HardwareMonitorInstaller.wax" />
     <Content Include="icon.ico" />
     <Content Include="Images\installer_background.bmp" />
@@ -76,6 +75,11 @@
   <PropertyGroup>
     <PreBuildEvent />
   </PropertyGroup>
+  <Target Name="AfterBuild">
+    <Exec Command="echo Copying $(Platform) installer to deploy area" />
+    <Exec Command="if not exist &quot;$(SolutionDir)deploy\editorinstaller\$(Platform)&quot; mkdir &quot;$(SolutionDir)deploy\editorinstaller\$(Platform)&quot;" />
+    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)deploy\editorinstaller\$(Platform)&quot;" />
+  </Target>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
 	Other similar extension points exist, see Wix.targets.
