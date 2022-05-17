@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define HardwareMonitorBootstrapper_TargetDir=$(var.HardwareMonitorBootstrapper.TargetDir)?>
-  <Product Id="2645677B-CB40-4A2E-B0D6-B5D0672F88B0" Name="Hardware Monitor Editor" Language="1033" Version="0.1.0.0" Manufacturer="Bennero" UpgradeCode="60f22caf-d0ee-4f77-b6ce-9bfc73b766b5">
+  <Product Id="2645677B-CB40-4A2E-B0D6-B5D0672F88B0" Name="Hardware Monitor Editor" Language="1033" Version="1.0.0.0" Manufacturer="Bennero" UpgradeCode="60f22caf-d0ee-4f77-b6ce-9bfc73b766b5">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <!-- Use icon in program list -->
