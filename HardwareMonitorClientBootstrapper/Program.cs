@@ -1,5 +1,6 @@
 ﻿using NativeInterface;
 using System;
+using System.IO;
 
 namespace HardwareMonitorClientBootstrapper
 {
@@ -12,6 +13,18 @@ namespace HardwareMonitorClientBootstrapper
 
             // Location of the hardware monitor editor JAR application
             string jarPath = AppDomain.CurrentDomain.BaseDirectory + "HardwareMonitorEditor.jar";
+
+            if(!File.Exists(jvmPath))
+            {
+                Console.Error.WriteLine("JVM not found at path: " + jvmPath);
+                Environment.Exit(1);
+            }
+
+            if (!File.Exists(jarPath))
+            {
+                Console.Error.WriteLine("HardwareMonitorEditor not found at path: " + jarPath);
+                Environment.Exit(2);
+            }
 
             // Create JVM
             Jvm jvm = new Jvm(jvmPath, Jvm.JNI_VERSION_9, jarPath);
