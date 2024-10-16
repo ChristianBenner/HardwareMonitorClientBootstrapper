@@ -6,8 +6,6 @@
 /HardwareMonitorInstaller/obj
 /HardwareMonitorClientBootstrapper/jre
 *.jar
-*.csproj
 *.user
-*.sln
 UpgradeLog.htm
 UpgradeLog2.htm
